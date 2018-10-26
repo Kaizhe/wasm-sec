@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -eux
+
+source emsdk/emsdk_env.sh --build=Release
+
+cd demos
+
+emrun --no_browser --port 8080 --serve_root ./files .

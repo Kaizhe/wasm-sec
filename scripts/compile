@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -eux
+
+source emsdk/emsdk_env.sh --build=Release
+
+cd demos
+
+# buffer overflow
+emcc bo.c -s WASM=1 -o ./files/bo.html
+
+# indirect function call
+emcc indirect.c -s WASM=1 -o ./files/indirect.html
+
+# safe
+emcc confuse1.cc -s WASM=1 -o ./files/confuse1.html
+
+# insecure
+emcc confuse2.cc -s WASM=1 -o ./files/confuse2.html
+
+# trap
+emcc confuse2.cc -flto -fvisibility=hidden -fsanitize=cfi -o ./files/confuse2_trap.html
